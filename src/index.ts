@@ -1,8 +1,18 @@
 import Flow from '@faasjs/flow';
 
-export default async function httpTrigger(flow: Flow, trigger: any, data: {
+interface Stack {
+  type: string;
+  id: string;
+  time: number;
+}
+
+export default async function httpTrigger (flow: Flow, trigger: any, data: {
   event: any;
-  context: any;
+  context: {
+    trackId: string;
+    history: Stack[];
+    current: Stack;
+  };
   [key: string]: any;
 }) {
   flow.logger.debug('httpTrigger %o', data);
@@ -34,7 +44,7 @@ export default async function httpTrigger(flow: Flow, trigger: any, data: {
 
   const outputHeaders = {
     'Content-Type': 'application/json; charset=UTF-8',
-    // 'X-Request-Id': context.request_id
+    'X-Track-Id': data.context.trackId,
   };
 
   let output: any = null;
