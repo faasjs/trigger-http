@@ -1,12 +1,12 @@
 {
   "name": "@faasjs/trigger-http",
-  "version": "0.0.0-alpha.1",
+  "version": "0.0.0-alpha.2",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint --ext .ts --fix src",
-    "build": "rm -rf ./lib && tsc",
+    "build": "rm -rf ./lib && rollup -c",
     "test": "jest --expand",
     "doc": "jsdoc2md --files ./lib/*.js > ./API.md",
     "ci": "yarn lint && yarn test",
@@ -16,21 +16,23 @@
     "lib"
   ],
   "dependencies": {
-    "@faasjs/flow": "0.0.0-alpha.7",
-    "@faasjs/utils": "0.0.0-alpha.2"
+    "@faasjs/flow": "0.0.0-alpha.12"
   },
   "devDependencies": {
-    "@faasjs/eslint-config-recommended": "0.0.0-alpha.0",
     "@babel/core": "*",
     "@babel/preset-env": "*",
     "@babel/preset-typescript": "*",
+    "@faasjs/eslint-config-recommended": "0.0.0-alpha.0",
     "@types/debug": "*",
     "@types/jest": "*",
     "@types/node": "*",
     "babel-jest": "*",
     "jest": "*",
     "jsdoc-babel": "*",
-    "jsdoc-to-markdown": "*"
+    "jsdoc-to-markdown": "*",
+    "rollup": "*",
+    "rollup-plugin-typescript2": "*",
+    "typescript": "*"
   },
   "babel": {
     "presets": [
