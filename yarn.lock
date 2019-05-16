@@ -649,33 +649,34 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@faasjs/deep_merge@0.0.0-alpha.0":
-  version "0.0.0-alpha.0"
-  resolved "https://registry.npmjs.org/@faasjs/deep_merge/-/deep_merge-0.0.0-alpha.0.tgz#ef85c18d4e1b35e08851558b3957b5ecbe5f9397"
-  integrity sha512-2ybIVnBCmYMfFC0kQ03u2wOhPRtckpcULR5V1/a79otHLau/KfluW2R21pofEyaoFzLkksY1OITdhAzdiBZeuQ==
+"@faasjs/deep_merge@beta":
+  version "0.0.0-alpha.1"
+  resolved "https://registry.npm.taobao.org/@faasjs/deep_merge/download/@faasjs/deep_merge-0.0.0-alpha.1.tgz#1ffa952a1dee1391898d74ef6eb9e314dbeff4c7"
+  integrity sha1-H/qVKh3uE5GJjXTvbrnjFNvv9Mc=
 
-"@faasjs/eslint-config-recommended@0.0.0-alpha.0":
-  version "0.0.0-alpha.0"
-  resolved "https://registry.npm.taobao.org/@faasjs/eslint-config-recommended/download/@faasjs/eslint-config-recommended-0.0.0-alpha.0.tgz#675a5a580c51d5d45210783a1980e9ea197145f3"
-  integrity sha1-Z1paWAxR1dRSEHg6GYDp6hlxRfM=
+"@faasjs/eslint-config-recommended@beta":
+  version "0.0.0-alpha.1"
+  resolved "https://registry.npm.taobao.org/@faasjs/eslint-config-recommended/download/@faasjs/eslint-config-recommended-0.0.0-alpha.1.tgz#3888e4e50e1eac30e9ee500e37f52bfceb5916c0"
+  integrity sha1-OIjk5Q4erDDp7lAON/Ur/OtZFsA=
   dependencies:
     "@typescript-eslint/eslint-plugin" "*"
     "@typescript-eslint/parser" "*"
     eslint "*"
+    eslint-plugin-security "*"
     typescript "*"
 
-"@faasjs/flow@0.0.0-alpha.12":
-  version "0.0.0-alpha.12"
-  resolved "https://registry.npm.taobao.org/@faasjs/flow/download/@faasjs/flow-0.0.0-alpha.12.tgz#578a0573120d76c71810a05cc6c06528a3e6babd"
-  integrity sha1-V4oFcxINdscYEKBcxsBlKKPmur0=
+"@faasjs/flow@beta":
+  version "0.0.0-alpha.15"
+  resolved "https://registry.npm.taobao.org/@faasjs/flow/download/@faasjs/flow-0.0.0-alpha.15.tgz#fb59cd0ee461c9fdbff81a3bfac23d02faba9ab8"
+  integrity sha1-+1nNDuRhyf2/+Bo7+sI9Avq6mrg=
   dependencies:
-    "@faasjs/deep_merge" "0.0.0-alpha.0"
-    "@faasjs/logger" "0.0.0-alpha.0"
+    "@faasjs/deep_merge" beta
+    "@faasjs/logger" beta
 
-"@faasjs/logger@0.0.0-alpha.0":
-  version "0.0.0-alpha.0"
-  resolved "https://registry.npm.taobao.org/@faasjs/logger/download/@faasjs/logger-0.0.0-alpha.0.tgz#014468d1031cce285a05dd8d668a5e44ac732589"
-  integrity sha1-AURo0QMczihaBd2NZopeRKxzJYk=
+"@faasjs/logger@beta":
+  version "0.0.0-alpha.2"
+  resolved "https://registry.npm.taobao.org/@faasjs/logger/download/@faasjs/logger-0.0.0-alpha.2.tgz#f318ce9acf5f988bfc7f4fd5e5687dad537cbf44"
+  integrity sha1-8xjOms9fmIv8f0/V5Wh9rVN8v0Q=
 
 "@jest/console@^24.7.1":
   version "24.7.1"
@@ -1777,6 +1778,13 @@ escodegen@^1.9.1:
     optionator "^0.8.1"
   optionalDependencies:
     source-map "~0.6.1"
+
+eslint-plugin-security@*:
+  version "1.4.0"
+  resolved "https://registry.npm.taobao.org/eslint-plugin-security/download/eslint-plugin-security-1.4.0.tgz#d4f314484a80b1b613b8c8886e84f52efe1526c2"
+  integrity sha1-1PMUSEqAsbYTuMiIboT1Lv4VJsI=
+  dependencies:
+    safe-regex "^1.1.0"
 
 eslint-scope@^4.0.0, eslint-scope@^4.0.3:
   version "4.0.3"

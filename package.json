@@ -1,14 +1,15 @@
 {
   "name": "@faasjs/trigger-http",
-  "version": "0.0.0-alpha.2",
+  "version": "0.0.0-alpha.3",
   "license": "MIT",
   "main": "lib/index.js",
+  "module": "lib/index.es.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "eslint --ext .ts --fix src",
     "build": "rm -rf ./lib && rollup -c",
     "test": "jest --expand",
-    "doc": "jsdoc2md --files ./lib/*.js > ./API.md",
+    "doc": "jsdoc2md --files ./lib/index.js > ./API.md",
     "ci": "yarn lint && yarn test",
     "commit": "yarn ci && yarn build && yarn doc"
   },
@@ -16,13 +17,13 @@
     "lib"
   ],
   "dependencies": {
-    "@faasjs/flow": "0.0.0-alpha.12"
+    "@faasjs/flow": "beta"
   },
   "devDependencies": {
     "@babel/core": "*",
     "@babel/preset-env": "*",
     "@babel/preset-typescript": "*",
-    "@faasjs/eslint-config-recommended": "0.0.0-alpha.0",
+    "@faasjs/eslint-config-recommended": "beta",
     "@types/debug": "*",
     "@types/jest": "*",
     "@types/node": "*",

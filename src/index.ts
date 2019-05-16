@@ -64,7 +64,7 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
           position?: 'header' | 'query' | 'body';
           required?: boolean;
           [key: string]: any;
-        } = trigger.param[key];
+        } = trigger.param[key as string];
 
         // 默认从 body 中读取参数
         if (!config.position) {
@@ -75,18 +75,18 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
         if (config.required &&
           (
             !input[config.position] ||
-            typeof input[config.position][key] === 'undefined' ||
-            input[config.position][key] === null
+            typeof input[config.position][key as string] === 'undefined' ||
+            input[config.position][key as string] === null
           )
         ) {
           output = Error(`${key} required`);
           break;
         }
 
-        const value = input[config.position][key];
+        const value = input[config.position][key as string];
 
         // 将通过校验的数据存入 input.param
-        input.param[key] = value;
+        input.param[key as string] = value;
       }
     }
   }
