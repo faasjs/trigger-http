@@ -15,7 +15,7 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
   };
   [key: string]: any;
 }) {
-  flow.logger.debug('httpTrigger %o', data);
+  flow.logger.debug('httpTrigger begin');
 
   // 预处理输入内容
   const input: {
