@@ -42,11 +42,6 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
     input.body = JSON.parse(input.body);
   }
 
-  const outputHeaders = {
-    'Content-Type': 'application/json; charset=UTF-8',
-    'X-Track-Id': data.context.trackId,
-  };
-
   let output: any = null;
 
   // 输入项校验
@@ -91,8 +86,44 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
     }
   }
 
+  // 注入 helpers
+  let response: {
+    headers: {
+      [key: string]: any;
+    };
+    statusCode: number | null;
+    body: string | null;
+  } = {
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      'X-Track-Id': data.context.trackId,
+    },
+    statusCode: null,
+    body: null
+  };
+
   // 若输入项校验通过，则触发流程
   if (output === null) {
+    flow.helpers.http = {
+      setHeader: function (key: string, value: any) {
+        if (value === null || typeof value === 'undefined') {
+          delete response.headers[key as string];
+        } else {
+          response.headers[key as string] = value;
+        }
+      },
+      setStatusCode: function (code: number) {
+        response.statusCode = code;
+      },
+      setBody: function (body: any) {
+        if (typeof body !== 'string' && body !== null) {
+          response.body = JSON.stringify(body);
+        } else {
+          response.body = body;
+        }
+      }
+    };
+
     if (flow.config.mode === 'sync') {
       // 同步执行模式，执行全部步骤
       const result: any = {
@@ -116,7 +147,7 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
   if (typeof output === 'undefined' || output === null) {
     // 没有结果或结果内容为空时，直接返回 201
     output = {
-      statusCode: 201,
+      statusCode: response.statusCode || 201,
     };
   } else if (output instanceof Error) {
     // 当结果是错误类型时
@@ -127,19 +158,18 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
   } else if (!output.statusCode) {
     output = {
       body: { data: output },
-      statusCode: 200,
+      statusCode: response.statusCode || 200,
     };
   }
 
-  // 注入公共响应头
-  output.headers = Object.assign(output.headers || {}, outputHeaders);
-
   // 序列化 body
-  if (typeof output.body !== 'string') {
+  if (typeof output.body !== 'undefined' && output.body !== 'string') {
     output.body = JSON.stringify(output.body);
   }
 
+  response = Object.assign(response, output);
+
   // 返回响应
-  flow.logger.debug('response %o', output);
-  return output;
+  flow.logger.debug('response %o', response);
+  return response;
 }

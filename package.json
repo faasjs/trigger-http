@@ -1,6 +1,6 @@
 {
   "name": "@faasjs/trigger-http",
-  "version": "0.0.0-alpha.5",
+  "version": "0.0.0-alpha.6",
   "license": "MIT",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
@@ -16,14 +16,13 @@
   "files": [
     "lib"
   ],
-  "dependencies": {
-    "@faasjs/flow": "beta"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/core": "*",
     "@babel/preset-env": "*",
     "@babel/preset-typescript": "*",
     "@faasjs/eslint-config-recommended": "beta",
+    "@faasjs/flow": "beta",
     "@types/debug": "*",
     "@types/jest": "*",
     "@types/node": "*",
