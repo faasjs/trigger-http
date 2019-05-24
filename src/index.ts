@@ -58,6 +58,7 @@ export async function handler (flow: Flow, trigger: any, data: {
         const config: {
           position?: 'header' | 'query' | 'body';
           required?: boolean;
+          type?: string;
           [key: string]: any;
         } = trigger.param[key as string];
 
@@ -75,6 +76,12 @@ export async function handler (flow: Flow, trigger: any, data: {
           )
         ) {
           output = Error(`${key} required`);
+          break;
+        }
+
+        // 输入项类型校验
+        if (config.type && input[config.position][key] && typeof input[config.position][key] !== config.type) {
+          output = Error(`${key} type error`);
           break;
         }
 
