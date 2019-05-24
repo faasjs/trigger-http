@@ -124,7 +124,7 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
       }
     };
 
-    if (flow.config.mode === 'sync') {
+    if (flow.mode === 'sync') {
       // 同步执行模式，执行全部步骤
       const result: any = {
         context: data.context,
@@ -136,7 +136,7 @@ export default async function httpTrigger (flow: Flow, trigger: any, data: {
       }
       output = result.event;
       flow.logger.debug('result %o', output);
-    } else if (flow.config.mode === 'async') {
+    } else if (flow.mode === 'async') {
       // 异步模式，异步调用下一步，无返回
       await flow.remoteInvoke(0, input);
       output = null;

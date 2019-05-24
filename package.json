@@ -1,6 +1,6 @@
 {
   "name": "@faasjs/trigger-http",
-  "version": "0.0.0-alpha.6",
+  "version": "0.0.0-alpha.7",
   "license": "MIT",
   "main": "lib/index.js",
   "module": "lib/index.es.js",
@@ -22,7 +22,7 @@
     "@babel/preset-env": "*",
     "@babel/preset-typescript": "*",
     "@faasjs/eslint-config-recommended": "beta",
-    "@faasjs/flow": "beta",
+    "@faasjs/flow": "^0.0.0-alpha.26",
     "@types/debug": "*",
     "@types/jest": "*",
     "@types/node": "*",
