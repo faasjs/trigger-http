@@ -1,12 +1,12 @@
 import Flow from '@faasjs/flow';
-import httpTrigger from '../index';
+import { handler } from '../index';
 
 describe('method', function () {
   const flow = new Flow(
     {
       triggers: {
         http: {
-          handler: httpTrigger,
+          handler,
           method: 'GET',
         },
       },

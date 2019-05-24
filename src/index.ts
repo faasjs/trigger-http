@@ -6,7 +6,7 @@ interface Stack {
   time: number;
 }
 
-export default async function httpTrigger (flow: Flow, trigger: any, data: {
+export async function handler (flow: Flow, trigger: any, data: {
   event: any;
   context: {
     trackId: string;

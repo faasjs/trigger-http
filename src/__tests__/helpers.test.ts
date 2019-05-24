@@ -1,5 +1,5 @@
 import Flow from '@faasjs/flow';
-import httpTrigger from '../index';
+import { handler } from '../index';
 
 describe('helpers', function () {
   describe('setHeader', function () {
@@ -8,7 +8,7 @@ describe('helpers', function () {
         {
           triggers: {
             http: {
-              handler: httpTrigger,
+              handler,
             },
           },
         },
@@ -27,7 +27,7 @@ describe('helpers', function () {
         {
           triggers: {
             http: {
-              handler: httpTrigger,
+              handler,
             },
           },
         },
@@ -47,7 +47,7 @@ describe('helpers', function () {
       {
         triggers: {
           http: {
-            handler: httpTrigger,
+            handler,
           },
         },
       },
@@ -67,7 +67,7 @@ describe('helpers', function () {
         {
           triggers: {
             http: {
-              handler: httpTrigger,
+              handler,
             },
           },
         },
@@ -86,7 +86,7 @@ describe('helpers', function () {
         {
           triggers: {
             http: {
-              handler: httpTrigger,
+              handler,
             },
           },
         },

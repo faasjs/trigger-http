@@ -1,5 +1,5 @@
 import Flow from '@faasjs/flow';
-import httpTrigger from '../index';
+import { handler } from '../index';
 
 describe('basic', function () {
   describe('sync mode', function () {
@@ -8,7 +8,7 @@ describe('basic', function () {
         {
           triggers: {
             http: {
-              handler: httpTrigger,
+              handler,
             },
           },
         },
@@ -32,7 +32,7 @@ describe('basic', function () {
         {
           triggers: {
             http: {
-              handler: httpTrigger,
+              handler,
             },
           },
         },
@@ -54,7 +54,7 @@ describe('basic', function () {
         mode: 'async',
         triggers: {
           http: {
-            handler: httpTrigger,
+            handler,
           },
         },
       },

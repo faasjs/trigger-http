@@ -666,9 +666,9 @@
     typescript "*"
 
 "@faasjs/flow@^0.0.0-alpha.26":
-  version "0.0.0-alpha.26"
-  resolved "https://registry.npmjs.org/@faasjs/flow/-/flow-0.0.0-alpha.26.tgz#d96261e142d2bb5c40697b896b8244e9c20004d6"
-  integrity sha512-X945ADDjTsozlNkLzPvFyu/TAnsk5GKcslvApe8dKEIwgyhaMHxdN1lZT8dcZLDqvjglfbvLS8FognaDPpnSaA==
+  version "0.0.0-alpha.27"
+  resolved "https://registry.npmjs.org/@faasjs/flow/-/flow-0.0.0-alpha.27.tgz#e6a163dab1cd4cb4d021f3ec81926c8e29e0d27a"
+  integrity sha512-yY3Gzfaa56BpXzQSfj4XGMtdqNdF4OBngBH8Vs7vj26ZccEUkXUApAiSRtKPQqT24VEQqRzldcyv0AIWGprx5A==
   dependencies:
     "@faasjs/deep_merge" beta
     "@faasjs/logger" beta
