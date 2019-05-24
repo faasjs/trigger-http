@@ -4,6 +4,9 @@ import { handler } from '../index';
 describe('method', function () {
   const flow = new Flow(
     {
+      resource: {
+        handler: () => -1
+      },
       triggers: {
         http: {
           handler,

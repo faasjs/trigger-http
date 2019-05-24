@@ -58,6 +58,8 @@ export async function handler (flow: Flow, trigger: any, data: {
         const config: {
           position?: 'header' | 'query' | 'body';
           required?: boolean;
+          type?: string;
+          verified?: (value: any) => any;
           [key: string]: any;
         } = trigger.param[key as string];
 
@@ -75,6 +77,18 @@ export async function handler (flow: Flow, trigger: any, data: {
           )
         ) {
           output = Error(`${key} required`);
+          break;
+        }
+
+        // 输入项类型校验
+        if (config.type && input[config.position][key as string] && typeof input[config.position][key as string] !== config.type) {
+          output = Error(`${key} type error`);
+          break;
+        }
+
+        // 自定义校验
+        if (config.verified && input[config.position][key as string] && config.verified!(input[config.position][key as string])) {
+          output = Error(`${key} verification failed`);
           break;
         }
 

@@ -6,6 +6,9 @@ describe('basic', function () {
     test('200', async function () {
       const flow = new Flow(
         {
+          resource: {
+            handler: () => -1
+          },
           triggers: {
             http: {
               handler,
@@ -30,6 +33,9 @@ describe('basic', function () {
     test('500', async function () {
       const flow = new Flow(
         {
+          resource: {
+            handler: () => -1
+          },
           triggers: {
             http: {
               handler,
@@ -51,6 +57,9 @@ describe('basic', function () {
   test('async mode', async function () {
     const flow = new Flow(
       {
+        resource: {
+          handler: () => -1
+        },
         mode: 'async',
         triggers: {
           http: {

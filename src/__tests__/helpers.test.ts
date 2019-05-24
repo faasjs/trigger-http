@@ -6,6 +6,9 @@ describe('helpers', function () {
     test('add', async function () {
       const flow = new Flow(
         {
+          resource: {
+            handler: () => -1
+          },
           triggers: {
             http: {
               handler,
@@ -25,6 +28,9 @@ describe('helpers', function () {
     test('delete', async function () {
       const flow = new Flow(
         {
+          resource: {
+            handler: () => -1
+          },
           triggers: {
             http: {
               handler,
@@ -45,6 +51,9 @@ describe('helpers', function () {
   test('setStatusCode', async function () {
     const flow = new Flow(
       {
+        resource: {
+          handler: () => -1
+        },
         triggers: {
           http: {
             handler,
@@ -65,6 +74,9 @@ describe('helpers', function () {
     test('string', async function () {
       const flow = new Flow(
         {
+          resource: {
+            handler: () => -1
+          },
           triggers: {
             http: {
               handler,
@@ -84,6 +96,9 @@ describe('helpers', function () {
     test('object', async function () {
       const flow = new Flow(
         {
+          resource: {
+            handler: () => -1
+          },
           triggers: {
             http: {
               handler,
