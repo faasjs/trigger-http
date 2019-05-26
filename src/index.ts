@@ -44,11 +44,56 @@ export async function handler (flow: Flow, trigger: any, data: {
 
   let output: any = null;
 
-  // 输入项校验
-
   // 校验请求方法
   if (trigger.method && input.method !== trigger.method) {
     output = Error('Wrong method');
+  }
+
+  interface Config {
+    required?: boolean;
+    type?: string;
+    handler?: (value: any) => any;
+    error: string;
+    internal: boolean;
+  }
+
+  function verification (data: any, config: Config, key: string, param: any) {
+    // 必填项校验
+    if (!config) {
+      output = Error(`${key} verifiy undefined`);
+      return;
+    }
+
+    if (config.required &&
+      (
+        !data ||
+        typeof data[key as string] === 'undefined' ||
+        data[key as string] === null
+      )
+    ) {
+      output = Error(`${key} required`);
+      return;
+    }
+
+    // 输入项类型校验
+    if (config.type && data[key as string] && typeof data[key as string] !== config.type) {
+      output = Error(`${key} type error`);
+      return;
+    }
+
+    // 自定义校验
+    if (config.handler && data[key as string] && config.handler!(data[key as string])) {
+      output = Error(`${key} ${config.error || 'verification failed'}`);
+      return;
+    }
+
+    // 递归 下一层
+    if (config.internal && data[key as string]) {
+      for (const internalKey in param) {
+        if (internalKey === 'verifiy') { continue; }
+        verification(data[key as string], param[internalKey as string].verifiy, internalKey, param[internalKey as string]);
+      }
+    }
   }
 
   // 校验参数
@@ -56,43 +101,22 @@ export async function handler (flow: Flow, trigger: any, data: {
     for (const key in trigger.param) {
       if (trigger.param.hasOwnProperty(key)) {
         const config: {
-          position?: 'header' | 'query' | 'body';
           required?: boolean;
           type?: string;
-          verified?: (value: any) => any;
+          handler?: (value: any) => any;
+          internal: boolean;
+          error: string;
           [key: string]: any;
-        } = trigger.param[key as string];
+        } = trigger.param[key as string].verifiy;
 
-        // 默认从 body 中读取参数
-        if (!config.position) {
-          config.position = 'body';
-        }
+        // 只允许从 body 中读取参数
+        // 递归校验
+        verification(input.body, config, key, trigger.param[key as string]);
 
-        // 必填项校验
-        if (config.required &&
-          (
-            !input[config.position] ||
-            typeof input[config.position][key as string] === 'undefined' ||
-            input[config.position][key as string] === null
-          )
-        ) {
-          output = Error(`${key} required`);
+        if (output) {
           break;
         }
-
-        // 输入项类型校验
-        if (config.type && input[config.position][key as string] && typeof input[config.position][key as string] !== config.type) {
-          output = Error(`${key} type error`);
-          break;
-        }
-
-        // 自定义校验
-        if (config.verified && input[config.position][key as string] && config.verified!(input[config.position][key as string])) {
-          output = Error(`${key} verification failed`);
-          break;
-        }
-
-        const value = input[config.position][key as string];
+        const value = input.body[key as string];
 
         // 将通过校验的数据存入 input.param
         input.param[key as string] = value;

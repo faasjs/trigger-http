@@ -12,19 +12,45 @@ describe('param', function () {
           handler,
           param: {
             key: {
-              required: true,
-              type: 'number'
+              verifiy: {
+                required: true,
+                type: 'number'
+              }
             },
             key1: {
-              type: 'string'
+              verifiy: {
+                handler: (a: number) => {
+                  return a + 1 > 2;
+                },
+                type: 'number',
+                error: 'error_message'
+              }
             },
             key2: {
-              verified: (a: number) => {
-                return a + 1 > 2;
+              verifiy: {
+                required: true,
+                internal: true
               },
-              type: 'number'
+              key3: {
+                verifiy: {
+                  internal: true
+                },
+                key6: {
+                  verifiy: {
+                    type: 'number'
+                  }
+                }
+              }
+            },
+            key4: {
+              verifiy: {
+                internal: true
+              },
+              key5: {
+                type: 'string'
+              }
             }
-          },
+          }
         },
       },
     },
@@ -35,34 +61,44 @@ describe('param', function () {
 
   const trigger = flow.createTrigger('http');
 
-  test('correct', async function () {
+  test('required', async function () {
     const res = await trigger({
       body: '{"key":1}',
       header: { 'Content-Type': 'application/json; charset=UTF-8' },
     }, {});
 
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual('{"data":{"key":1}}');
+    expect(res.statusCode).toEqual(500);
+    expect(res.body).toEqual('{"error":{"message":"key2 required"}}');
   });
 
-  test('correct', async function () {
+  test('verifiy undefined', async function () {
     const res = await trigger({
-      body: '{"key":1, "key1": "1", "key2":1}',
-      header: { 'Content-Type': 'application/json; charset=UTF-8' },
-    }, {});
-
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toEqual('{"data":{"key":1,"key1":"1","key2":1}}');
-  });
-
-  test('type error', async function () {
-    const res = await trigger({
-      body: '{"key":1, "key2": 3}',
+      body: '{"key":1, "key2": {"key3":1}, "key4": {}}',
       header: { 'Content-Type': 'application/json; charset=UTF-8' },
     }, {});
 
     expect(res.statusCode).toEqual(500);
-    expect(res.body).toEqual('{"error":{"message":"key2 verification failed"}}');
+    expect(res.body).toEqual('{"error":{"message":"key5 verifiy undefined"}}');
+  });
+
+  test('correct', async function () {
+    const res = await trigger({
+      body: '{"key":1, "key1": 1, "key2":{"key3":1}}',
+      header: { 'Content-Type': 'application/json; charset=UTF-8' },
+    }, {});
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual('{"data":{"key":1,"key1":1,"key2":{"key3":1}}}');
+  });
+
+  test('error_message', async function () {
+    const res = await trigger({
+      body: '{"key":1, "key1": 3}',
+      header: { 'Content-Type': 'application/json; charset=UTF-8' },
+    }, {});
+
+    expect(res.statusCode).toEqual(500);
+    expect(res.body).toEqual('{"error":{"message":"key1 error_message"}}');
   });
 
   test('type error', async function () {
@@ -73,6 +109,26 @@ describe('param', function () {
 
     expect(res.statusCode).toEqual(500);
     expect(res.body).toEqual('{"error":{"message":"key type error"}}');
+  });
+
+  test('key6 type error', async function () {
+    const res = await trigger({
+      body: '{"key":1, "key2": {"key3": {"key6": "1"}} }',
+      header: { 'Content-Type': 'application/json; charset=UTF-8' },
+    }, {});
+
+    expect(res.statusCode).toEqual(500);
+    expect(res.body).toEqual('{"error":{"message":"key6 type error"}}');
+  });
+
+  test('key6 correct', async function () {
+    const res = await trigger({
+      body: '{"key":1, "key2": {"key3": {"key6": 1}} }',
+      header: { 'Content-Type': 'application/json; charset=UTF-8' },
+    }, {});
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual('{"data":{"key":1,"key2":{"key3":{"key6":1}}}}');
   });
 
   test('error', async function () {
