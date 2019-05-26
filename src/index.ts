@@ -100,18 +100,9 @@ export async function handler (flow: Flow, trigger: any, data: {
   if (trigger.param) {
     for (const key in trigger.param) {
       if (trigger.param.hasOwnProperty(key)) {
-        const config: {
-          required?: boolean;
-          type?: string;
-          handler?: (value: any) => any;
-          internal: boolean;
-          error: string;
-          [key: string]: any;
-        } = trigger.param[key as string].verifiy;
-
         // 只允许从 body 中读取参数
         // 递归校验
-        verification(input.body, config, key, trigger.param[key as string]);
+        verification(input.body, trigger.param[key as string].verifiy, key, trigger.param[key as string]);
 
         if (output) {
           break;
